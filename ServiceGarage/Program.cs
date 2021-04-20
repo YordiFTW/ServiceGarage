@@ -4,19 +4,32 @@ using System.Linq;
 
 namespace ServiceGarage
 {
+    delegate void OrderDelegate(int order);
+
     class Program
     {
+        
+
         static void Main(string[] args)
         {
             List<ReperatieOpdracht> lijstOpdrachten = (List<ReperatieOpdracht>)Data();
-            var opdracht = lijstOpdrachten.Find(s => s.Id.Equals(1));
+            var opdracht = lijstOpdrachten.Find(s => s.Id.Equals(2));
 
-            foreach (var service in opdracht.Services)
+            var sortedCollection = opdracht.Services.ToList();
+            sortedCollection.Sort();
+
+
+            foreach (var service in sortedCollection)
                 {
                 Console.WriteLine(service);
                 }
             
             Console.ReadKey();
+        }
+
+        private static void ReperatieOpdracht_OrderEvent(int order)
+        {
+            Console.WriteLine("Pet is hungry!!!");
         }
 
         public static IEnumerable<ReperatieOpdracht> Data()
@@ -35,7 +48,7 @@ namespace ServiceGarage
                     Id = 1,
                     Klantnaam = "Piet",
                     Auto = "Volvo",
-                    Services = new List<Service> {Service.BandenSpanning, Service.WinterbandenWisselen}
+                    Services = new List<Service> { Service.BandenSpanning, Service.WinterbandenWisselen }
                 },
                 new ReperatieOpdracht
                 {
@@ -61,5 +74,7 @@ namespace ServiceGarage
 
             //reperatieOpdracht1.Services = services;
         }
+
+        public event OrderDelegate OrderEvent;
     }
 }

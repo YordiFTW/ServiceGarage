@@ -6,6 +6,7 @@ namespace ServiceGarage
 {
     class ReperatieOpdracht
     {
+        
         public int Id { get; set; }
         public string Klantnaam { get; set; }
         public string Auto { get; set; }
