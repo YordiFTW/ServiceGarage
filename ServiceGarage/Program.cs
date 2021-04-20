@@ -79,6 +79,6 @@ namespace ServiceGarage
             //reperatieOpdracht1.Services = services;
         }
 
-        public event OrderDelegate OrderEvent;
+        
     }
 }
