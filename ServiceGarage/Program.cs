@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ServiceGarage
 {
-    delegate void OrderDelegate(int order);
+    delegate void OrderDelegate(List<Service> order);
 
     class Program
     {
@@ -12,24 +12,28 @@ namespace ServiceGarage
 
         static void Main(string[] args)
         {
+
             List<ReperatieOpdracht> lijstOpdrachten = (List<ReperatieOpdracht>)Data();
             var opdracht = lijstOpdrachten.Find(s => s.Id.Equals(2));
 
             var sortedCollection = opdracht.Services.ToList();
-            sortedCollection.Sort();
 
+            OrderDelegate orderDelegate = DelegateMethod;
 
-            foreach (var service in sortedCollection)
-                {
-                Console.WriteLine(service);
-                }
-            
-            Console.ReadKey();
+            orderDelegate.Invoke(opdracht.Services);
+
         }
 
-        private static void ReperatieOpdracht_OrderEvent(int order)
+        static void DelegateMethod(List<Service> order)
         {
-            Console.WriteLine("Pet is hungry!!!");
+            order.Sort();
+
+            foreach (var service in order)
+            {
+                Console.WriteLine(service);
+            }
+
+            Console.ReadKey();
         }
 
         public static IEnumerable<ReperatieOpdracht> Data()
